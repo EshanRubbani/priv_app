@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:priv_app/location.dart';
 
 class Permissions extends StatefulWidget {
   const Permissions({super.key});
@@ -14,6 +15,10 @@ class _PermissionsState extends State<Permissions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(onPressed: () {  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) =>  location()),
+  );}, label: Text("Next")),
       appBar: AppBar(
         title: const Text("Permissions"),
         backgroundColor: Colors.blueAccent,

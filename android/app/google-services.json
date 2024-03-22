@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "910629021268",
+    "firebase_url": "https://trackify-a826d-default-rtdb.firebaseio.com",
+    "project_id": "trackify-a826d",
+    "storage_bucket": "trackify-a826d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910629021268:android:657ee4cce7d0b6a7c02fc1",
+        "android_client_info": {
+          "package_name": "com.example.priv_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvPTyYPfY0VmcnjIlUTf1JgjAqQJh6vZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910629021268:android:d2f6ddb9ef8aa8bac02fc1",
+        "android_client_info": {
+          "package_name": "com.example.responsivedashboard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvPTyYPfY0VmcnjIlUTf1JgjAqQJh6vZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
