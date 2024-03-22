@@ -46,7 +46,7 @@ Future<void> _getautoLocation() async {
       'latitude': _locationResult.latitude,
       'longitude': _locationResult.longitude,
       'name': 'john'
-    }, SetOptions(merge: true));
+    }, SetOptions(merge: false));
     print("send auto location");
   } catch (e) {
     print(e);
@@ -61,7 +61,7 @@ void _startLocationUpdates() {
   _getautoLocation();
 
   // Schedule `_getautoLocation()` to run every 1 minute
-  Timer.periodic(Duration(minutes: 1), (timer) {
+  Timer.periodic(Duration(seconds: 10), (timer) {
     _getautoLocation();
   });
 }
