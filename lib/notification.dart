@@ -1,83 +1,108 @@
-// ignore_for_file: library_private_types_in_public_api
+import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:notifications/notifications.dart';
+import 'package:notification_listener_service/notification_event.dart';
+import 'package:notification_listener_service/notification_listener_service.dart';
 
-void main() => runApp(notification());
+void main() {
+  runApp(const notification());
+}
 
-// ignore: camel_case_types
 class notification extends StatefulWidget {
+  const notification({Key? key}) : super(key: key);
+
   @override
-  _notificationState createState() => _notificationState();
+  State<notification> createState() => _notificationState();
 }
 
 class _notificationState extends State<notification> {
-  Notifications? _notifications;
-  StreamSubscription<NotificationEvent>? _subscription;
-  List<NotificationEvent> _log = [];
-  bool started = false;
+  StreamSubscription<ServiceNotificationEvent>? _subscription;
+  List<ServiceNotificationEvent> events = [];
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    startListening();
-  }
-
-  void onData(NotificationEvent event) {
-    setState(() {
-      _log.add(event);
-    });
-    print(event.toString());
-  }
-
-  void example() {
-    Notifications().notificationStream!.listen((event) => print(event));
-  }
-
-  void startListening() {
-    _notifications = Notifications();
-    try {
-      _subscription = _notifications!.notificationStream!.listen(onData);
-      setState(() => started = true);
-    } on NotificationException catch (exception) {
-      print(exception);
-    }
-  }
-
-  void stopListening() {
-    _subscription?.cancel();
-    setState(() => started = false);
   }
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: const Text('Notifications Example app'),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
         ),
-        body: new Center(
-            child: new ListView.builder(
-                itemCount: _log.length,
-                reverse: true,
-                itemBuilder: (BuildContext context, int idx) {
-                  final entry = _log[idx];
-                  return ListTile(
-                      leading:
-                          Text(entry.timeStamp.toString().substring(0, 19)),
-                      trailing:
-                          Text(entry.packageName.toString().split('.').last));
-                })),
-        floatingActionButton: new FloatingActionButton(
-          onPressed: started ? stopListening : startListening,
-          tooltip: 'Start/Stop sensing',
-          child: started ? Icon(Icons.stop) : Icon(Icons.play_arrow),
+        body: Center(
+          child: Column(
+            children: [
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () async {
+                        final res = await NotificationListenerService
+                            .requestPermission();
+                        log("Is enabled: $res");
+                      },
+                      child: const Text("Request Permission"),
+                    ),
+                    const SizedBox(height: 20.0),
+                    TextButton(
+                      onPressed: () async {
+                        final bool res = await NotificationListenerService
+                            .isPermissionGranted();
+                        log("Is enabled: $res");
+                      },
+                      child: const Text("Check Permission"),
+                    ),
+                    const SizedBox(height: 20.0),
+                    TextButton(
+                      onPressed: () {
+                        _subscription = NotificationListenerService
+                            .notificationsStream
+                            .listen((event) {
+                          log("$event");
+                          setState(() {
+                            events.add(event);
+                          });
+                        });
+                      },
+                      child: const Text("Start Stream"),
+                    ),
+                    const SizedBox(height: 20.0),
+                    TextButton(
+                      onPressed: () {
+                        _subscription?.cancel();
+                      },
+                      child: const Text("Stop Stream"),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: events.length,
+                  itemBuilder: (_, index) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: ListTile(
+                      title: Text(events[index].title ?? "No title"),
+                      subtitle: 
+                      Text(
+                            events[index].content ?? "no content",
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                      trailing: Text(events[index].packageName ?? "no package name"),
+                      isThreeLine: true,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
