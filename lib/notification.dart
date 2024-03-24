@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:notification_listener_service/notification_event.dart';
-import 'package:notification_listener_service/notification_listener_service.dart';
+import 'package:notification_listener_service/notification_listener_service.dart' ;
 
 void main() {
   runApp(const notification());
@@ -19,14 +19,26 @@ class notification extends StatefulWidget {
 class _notificationState extends State<notification> {
   StreamSubscription<ServiceNotificationEvent>? _subscription;
   List<ServiceNotificationEvent> events = [];
-
   @override
   void initState() {
     super.initState();
+    _startListening(); // Start listening when the app starts
   }
 
+  void _startListening() {
+    print("stating Noti Service");
+    _subscription = NotificationListenerService.notificationsStream.listen((event) {
+      if (event.packageName != "" && event.content != "" && event.title != "") {
+        log("$event");
+        setState(() {
+          events.add(event);
+        });
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -64,10 +76,12 @@ class _notificationState extends State<notification> {
                         _subscription = NotificationListenerService
                             .notificationsStream
                             .listen((event) {
-                          log("$event");
+                            if(event.packageName !="" && event.content !="" && event.title !=""){log("$event");
                           setState(() {
                             events.add(event);
-                          });
+                            
+                          });}
+                          
                         });
                       },
                       child: const Text("Start Stream"),
@@ -107,4 +121,5 @@ class _notificationState extends State<notification> {
       ),
     );
   }
+
 }
