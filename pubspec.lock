@@ -288,6 +288,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+  notifications:
+    dependency: "direct main"
+    description:
+      name: notifications
+      sha256: aeb725844d33abc2e5d3a8fb5fe93f9944d9659171a74b7705199cf153b4c684
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   path:
     dependency: transitive
     description:

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:priv_app/notification.dart';
 import "mymap.dart";
 import 'package:location/location.dart' as loc;
 import 'package:permission_handler/permission_handler.dart';
@@ -28,13 +29,17 @@ class _locationState extends State<location> {
   void initState() {
     super.initState();
     _requestPermission();
-    location.changeSettings(interval: 300, accuracy: loc.LocationAccuracy.high);
+    location.changeSettings(interval: 1, accuracy: loc.LocationAccuracy.high);
     location.enableBackgroundMode(enable: true);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(onPressed: () {  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) =>  notification()),
+  );}, label: Text("Next")),
       appBar: AppBar(
         title: Text('live location tracker'),
       ),
