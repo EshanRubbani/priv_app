@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:notification_listener_service/notification_listener_service.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:priv_app/location.dart';
 import 'package:priv_app/notification.dart';
 
 class Permissions extends StatefulWidget {
@@ -307,7 +306,7 @@ class _PermissionsState extends State<Permissions> {
                 }
                 
               },
-              title: const Text("Camera Permission"),
+              title: const Text("Notification Permission"),
               subtitle: const Text("Status of Permission: "),
             ),
             

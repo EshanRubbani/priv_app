@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'dart:async';
 import 'dart:developer';
 
@@ -5,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:notification_listener_service/notification_event.dart';
 import 'package:notification_listener_service/notification_listener_service.dart' ;
 
-void main() {
-  runApp(const notification());
+void  main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  runApp(const MaterialApp(home: notification()));
 }
 
 class notification extends StatefulWidget {
@@ -19,23 +23,26 @@ class notification extends StatefulWidget {
 class _notificationState extends State<notification> {
   StreamSubscription<ServiceNotificationEvent>? _subscription;
   List<ServiceNotificationEvent> events = [];
+  bool permision = false;
   @override
   void initState() {
     super.initState();
-    _startListening(); // Start listening when the app starts
-  }
+     // Start listening when the app starts
+    NotificationListenerService.isPermissionGranted();
+    NotificationListenerService.notificationsStream.listen(
 
-  void _startListening() {
-    print("stating Noti Service");
-    _subscription = NotificationListenerService.notificationsStream.listen((event) {
+      (event) {
+      print("stating Noti Service");
       if (event.packageName != "" && event.content != "" && event.title != "") {
         log("$event");
         setState(() {
           events.add(event);
         });
       }
-    });
-  }
+    }
+
+    );
+      }
   @override
   Widget build(BuildContext context) {
     
