@@ -36,10 +36,10 @@ class _locationState extends State<location> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(onPressed: () {  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) =>  notification()),
-  );}, label: Text("Next")),
+  //     floatingActionButton: FloatingActionButton.extended(onPressed: () {  Navigator.push(
+  //   context,
+  //   MaterialPageRoute(builder: (context) =>  notification()),
+  // );}, label: Text("Next")),
       appBar: AppBar(
         title: Text('live location tracker'),
       ),

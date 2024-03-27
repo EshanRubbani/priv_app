@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:notification_listener_service/notification_listener_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:priv_app/notification.dart';
 
@@ -16,10 +15,11 @@ class _PermissionsState extends State<Permissions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(onPressed: () {  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) =>  notification()),
-  );}, label: Text("Next")),
+  //     floatingActionButton: FloatingActionButton.extended(onPressed: () {  Navigator.push(
+  //   context,
+  //   MaterialPageRoute(builder: (context) =>  notification()),
+  // );}, 
+  // label: Text("Next")),
       appBar: AppBar(
         title: const Text("Permissions"),
         backgroundColor: Colors.blueAccent,
@@ -284,28 +284,28 @@ class _PermissionsState extends State<Permissions> {
                 
               ),
               
-              onTap: () async{
-                bool notiStatus = await NotificationListenerService
-                            .requestPermission();
-                if(notiStatus == true)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Granted")
-                     ));
-                }
-                if(notiStatus == false)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Denied")
-                     ));
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("This Permission is required")
-                     ));
-                  NotificationListenerService
-                            .requestPermission();   
-                }
+              // onTap: () async{
+              //   bool notiStatus = await NotificationListenerService
+              //               .requestPermission();
+              //   if(notiStatus == true)
+              //   {
+              //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              //       content: Text("Permission Is Granted")
+              //        ));
+              //   }
+              //   if(notiStatus == false)
+              //   {
+              //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              //       content: Text("Permission Is Denied")
+              //        ));
+              //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              //       content: Text("This Permission is required")
+              //        ));
+              //     NotificationListenerService
+              //               .requestPermission();   
+              //   }
                 
-              },
+              // },
               title: const Text("Notification Permission"),
               subtitle: const Text("Status of Permission: "),
             ),
