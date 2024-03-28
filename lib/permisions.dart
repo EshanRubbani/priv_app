@@ -15,11 +15,11 @@ class _PermissionsState extends State<Permissions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  //     floatingActionButton: FloatingActionButton.extended(onPressed: () {  Navigator.push(
-  //   context,
-  //   MaterialPageRoute(builder: (context) =>  notification()),
-  // );}, 
-  // label: Text("Next")),
+      floatingActionButton: FloatingActionButton.extended(onPressed: () {  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) =>  notification()),
+  );}, 
+  label: Text("Next")),
       appBar: AppBar(
         title: const Text("Permissions"),
         backgroundColor: Colors.blueAccent,
