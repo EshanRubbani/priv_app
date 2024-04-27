@@ -15,84 +15,70 @@ class _PermissionsState extends State<Permissions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(onPressed: () {  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) =>  notification()),
-  );}, 
-  label: Text("Next")),
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => notification()),
+            );
+          },
+          label: Text("Next")),
       appBar: AppBar(
         title: const Text("Permissions"),
         backgroundColor: Colors.blueAccent,
-        centerTitle: true,),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             ListTile(
               leading: const CircleAvatar(
                 child: Icon(Icons.location_on),
-               ),
+              ),
               title: const Text("Location Permission"),
               subtitle: const Text("Status of Permission: "),
-              onTap: () async{
-                PermissionStatus locationStatus = await Permission.location.request();
-                if(locationStatus == PermissionStatus.granted)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Granted")
-                     ));
+              onTap: () async {
+                PermissionStatus locationStatus =
+                    await Permission.location.request();
+                if (locationStatus == PermissionStatus.granted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Granted")));
                 }
-                if(locationStatus == PermissionStatus.denied)
-                {
+                if (locationStatus == PermissionStatus.denied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Denied")));
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Denied")
-                     ));
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("This Permission is required")
-                     ));
+                      content: Text("This Permission is required")));
                 }
-                if(locationStatus == PermissionStatus.permanentlyDenied)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Required")
-                     ));
+                if (locationStatus == PermissionStatus.permanentlyDenied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Required")));
                   openAppSettings();
                 }
-
-
               },
             ),
             ListTile(
               leading: const CircleAvatar(
                 child: Icon(Icons.camera_alt),
-                
               ),
-              
-              onTap: () async{
-                PermissionStatus cameraStatus = await Permission.camera.request();
-                if(cameraStatus == PermissionStatus.granted)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Granted")
-                     ));
+              onTap: () async {
+                PermissionStatus cameraStatus =
+                    await Permission.camera.request();
+                if (cameraStatus == PermissionStatus.granted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Granted")));
                 }
-                if(cameraStatus == PermissionStatus.denied)
-                {
+                if (cameraStatus == PermissionStatus.denied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Denied")));
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Denied")
-                     ));
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("This Permission is required")
-                     ));
+                      content: Text("This Permission is required")));
                 }
-                if(cameraStatus == PermissionStatus.permanentlyDenied)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Required")
-                     ));
+                if (cameraStatus == PermissionStatus.permanentlyDenied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Required")));
                   openAppSettings();
                 }
-
-
               },
               title: const Text("Camera Permission"),
               subtitle: const Text("Status of Permission: "),
@@ -100,35 +86,25 @@ class _PermissionsState extends State<Permissions> {
             ListTile(
               leading: const CircleAvatar(
                 child: Icon(Icons.contacts),
-                
               ),
-              
-              onTap: () async{
-                PermissionStatus contactsStatus = await Permission.contacts.request();
-                if(contactsStatus == PermissionStatus.granted)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Granted")
-                     ));
+              onTap: () async {
+                PermissionStatus contactsStatus =
+                    await Permission.contacts.request();
+                if (contactsStatus == PermissionStatus.granted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Granted")));
                 }
-                if(contactsStatus == PermissionStatus.denied)
-                {
+                if (contactsStatus == PermissionStatus.denied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Denied")));
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Denied")
-                     ));
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("This Permission is required")
-                     ));
+                      content: Text("This Permission is required")));
                 }
-                if(contactsStatus == PermissionStatus.permanentlyDenied)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Required")
-                     ));
+                if (contactsStatus == PermissionStatus.permanentlyDenied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Required")));
                   openAppSettings();
                 }
-
-
               },
               title: const Text("Contacts Permission"),
               subtitle: const Text("Status of Permission: "),
@@ -136,35 +112,24 @@ class _PermissionsState extends State<Permissions> {
             ListTile(
               leading: const CircleAvatar(
                 child: Icon(Icons.phone),
-                
               ),
-              
-              onTap: () async{
+              onTap: () async {
                 PermissionStatus phoneStatus = await Permission.phone.request();
-                if(phoneStatus == PermissionStatus.granted)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Granted")
-                     ));
+                if (phoneStatus == PermissionStatus.granted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Granted")));
                 }
-                if(phoneStatus == PermissionStatus.denied)
-                {
+                if (phoneStatus == PermissionStatus.denied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Denied")));
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Denied")
-                     ));
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("This Permission is required")
-                     ));
+                      content: Text("This Permission is required")));
                 }
-                if(phoneStatus == PermissionStatus.permanentlyDenied)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Required")
-                     ));
+                if (phoneStatus == PermissionStatus.permanentlyDenied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Required")));
                   openAppSettings();
                 }
-
-
               },
               title: const Text("Phone Logs Permission"),
               subtitle: const Text("Status of Permission: "),
@@ -172,36 +137,26 @@ class _PermissionsState extends State<Permissions> {
             ListTile(
               leading: const CircleAvatar(
                 child: Icon(Icons.storage),
-                
               ),
-              
-              onTap: () async{
-                PermissionStatus storageStatus = await Permission.storage.request();
-                if(storageStatus == PermissionStatus.granted)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Granted")
-                     ));
+              onTap: () async {
+                PermissionStatus storageStatus =
+                    await Permission.storage.request();
+                if (storageStatus == PermissionStatus.granted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Granted")));
                 }
-                if(storageStatus == PermissionStatus.denied)
-                {
+                if (storageStatus == PermissionStatus.denied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Denied")));
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Denied")
-                     ));
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("This Permission is required")
-                     ));
-                     openAppSettings();
-                }
-                if(storageStatus == PermissionStatus.permanentlyDenied)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Required")
-                     ));
+                      content: Text("This Permission is required")));
                   openAppSettings();
                 }
-
-
+                if (storageStatus == PermissionStatus.permanentlyDenied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Required")));
+                  openAppSettings();
+                }
               },
               title: const Text("Storage Permission"),
               subtitle: const Text("Status of Permission: "),
@@ -209,35 +164,24 @@ class _PermissionsState extends State<Permissions> {
             ListTile(
               leading: const CircleAvatar(
                 child: Icon(Icons.sms),
-                
               ),
-              
-              onTap: () async{
+              onTap: () async {
                 PermissionStatus smsStatus = await Permission.sms.request();
-                if(smsStatus == PermissionStatus.granted)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Granted")
-                     ));
+                if (smsStatus == PermissionStatus.granted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Granted")));
                 }
-                if(smsStatus == PermissionStatus.denied)
-                {
+                if (smsStatus == PermissionStatus.denied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Denied")));
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Denied")
-                     ));
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("This Permission is required")
-                     ));
+                      content: Text("This Permission is required")));
                 }
-                if(smsStatus == PermissionStatus.permanentlyDenied)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Required")
-                     ));
+                if (smsStatus == PermissionStatus.permanentlyDenied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Required")));
                   openAppSettings();
                 }
-
-
               },
               title: const Text("SMS Permission"),
               subtitle: const Text("Status of Permission: "),
@@ -245,35 +189,25 @@ class _PermissionsState extends State<Permissions> {
             ListTile(
               leading: const CircleAvatar(
                 child: Icon(Icons.mic),
-                
               ),
-              
-              onTap: () async{
-                PermissionStatus micStatus = await Permission.microphone.request();
-                if(micStatus == PermissionStatus.granted)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Granted")
-                     ));
+              onTap: () async {
+                PermissionStatus micStatus =
+                    await Permission.microphone.request();
+                if (micStatus == PermissionStatus.granted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Granted")));
                 }
-                if(micStatus == PermissionStatus.denied)
-                {
+                if (micStatus == PermissionStatus.denied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Denied")));
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Denied")
-                     ));
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("This Permission is required")
-                     ));
+                      content: Text("This Permission is required")));
                 }
-                if(micStatus == PermissionStatus.permanentlyDenied)
-                {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Permission Is Required")
-                     ));
+                if (micStatus == PermissionStatus.permanentlyDenied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Permission Is Required")));
                   openAppSettings();
                 }
-
-
               },
               title: const Text("Mic Permission"),
               subtitle: const Text("Status of Permission: "),
@@ -281,9 +215,8 @@ class _PermissionsState extends State<Permissions> {
             ListTile(
               leading: const CircleAvatar(
                 child: Icon(Icons.notification_add),
-                
               ),
-              
+
               // onTap: () async{
               //   bool notiStatus = await NotificationListenerService
               //               .requestPermission();
@@ -302,16 +235,15 @@ class _PermissionsState extends State<Permissions> {
               //       content: Text("This Permission is required")
               //        ));
               //     NotificationListenerService
-              //               .requestPermission();   
+              //               .requestPermission();
               //   }
-                
+
               // },
               title: const Text("Notification Permission"),
               subtitle: const Text("Status of Permission: "),
             ),
-            
           ],
-        ),     
+        ),
       ),
     );
   }

