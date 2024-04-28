@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:priv_app/notification.dart';
-import "mymap.dart";
+import 'package:priv_app/services/notification.dart';
+import 'mymap.dart';
 import 'package:location/location.dart' as loc;
 import 'package:permission_handler/permission_handler.dart';
 
@@ -13,8 +13,6 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MaterialApp(home: location()));
 }
-
-
 
 class location extends StatefulWidget {
   @override
@@ -36,10 +34,10 @@ class _locationState extends State<location> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  //     floatingActionButton: FloatingActionButton.extended(onPressed: () {  Navigator.push(
-  //   context,
-  //   MaterialPageRoute(builder: (context) =>  notification()),
-  // );}, label: Text("Next")),
+      //     floatingActionButton: FloatingActionButton.extended(onPressed: () {  Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) =>  notification()),
+      // );}, label: Text("Next")),
       appBar: AppBar(
         title: Text('live location tracker'),
       ),

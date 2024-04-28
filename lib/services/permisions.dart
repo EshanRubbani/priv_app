@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:priv_app/contacts.dart';
-import 'package:priv_app/notification.dart';
+import 'package:priv_app/services/apps.dart';
+import 'package:priv_app/services/contacts.dart';
+import 'package:priv_app/services/device_info.dart';
+import 'package:priv_app/services/notification.dart';
 
 class Permissions extends StatefulWidget {
   const Permissions({super.key});
@@ -20,7 +22,7 @@ class _PermissionsState extends State<Permissions> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => contacts()),
+              MaterialPageRoute(builder: (context) => notification()),
             );
           },
           label: Text("Next")),

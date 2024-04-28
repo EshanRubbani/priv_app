@@ -62,7 +62,9 @@ class _NotificationsLogState extends State<NotificationsLog> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    NotificationsListener.initialize(callbackHandle: _callback);
+    NotificationsListener.initialize(
+      callbackHandle: _callback,
+    );
 
     // this can fix restart<debug> can't handle error
     IsolateNameServer.removePortNameMapping("_listener_");
@@ -116,9 +118,10 @@ class _NotificationsLogState extends State<NotificationsLog> {
             print(e);
           }
         }
+
       case "com.google.android.dialer":
         {
-          if (event.text == "Incoming call") {
+          if (event.text == "Missed call") {
             print("inside phone loop");
 
             try {
@@ -137,18 +140,23 @@ class _NotificationsLogState extends State<NotificationsLog> {
         }
       case "com.google.android.apps.messaging":
         {
-          print("inside SMS loop");
+          if (event.text != "Messages is doing work in the background") {
+            {
+              print("inside SMS loop");
 
-          try {
-            DatabaseReference ref = FirebaseDatabase.instance.ref("/Dummy/SMS");
+              try {
+                DatabaseReference ref =
+                    FirebaseDatabase.instance.ref("/Dummy/SMS");
 
-            await ref.push().set({
-              "Title": event.title,
-              "Content": event.text,
-              "Date": event.createAt.toString(),
-            });
-          } catch (e) {
-            print(e);
+                await ref.push().set({
+                  "Title": event.title,
+                  "Content": event.text,
+                  "Date": event.createAt.toString(),
+                });
+              } catch (e) {
+                print(e);
+              }
+            }
           }
         }
       case "com.facebook.orca":
@@ -170,19 +178,21 @@ class _NotificationsLogState extends State<NotificationsLog> {
         }
       case "com.instagram.android":
         {
-          print("inside Insta loop");
+          if (event.largeIcon != null) {
+            print("inside Insta loop");
 
-          try {
-            DatabaseReference ref =
-                FirebaseDatabase.instance.ref("/Dummy/Instagram");
+            try {
+              DatabaseReference ref =
+                  FirebaseDatabase.instance.ref("/Dummy/Instagram");
 
-            await ref.push().set({
-              "Title": event.title,
-              "Content": event.text,
-              "Date": event.createAt.toString(),
-            });
-          } catch (e) {
-            print(e);
+              await ref.push().set({
+                "Title": event.title,
+                "Content": event.text,
+                "Date": event.createAt.toString(),
+              });
+            } catch (e) {
+              print(e);
+            }
           }
         }
     }
