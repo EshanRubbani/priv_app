@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:priv_app/services/notification.dart';
 import 'mymap.dart';
@@ -101,13 +102,15 @@ class _locationState extends State<location> {
   }
 
   _getLocation() async {
+    final loc.LocationData _locationResult = await location.getLocation();
     try {
-      final loc.LocationData _locationResult = await location.getLocation();
-      await FirebaseFirestore.instance.collection('location').doc('user1').set({
-        'latitude': _locationResult.latitude,
-        'longitude': _locationResult.longitude,
-        'name': 'john'
-      }, SetOptions(merge: true));
+      DatabaseReference ref = FirebaseDatabase.instance.ref("/Dummy/Location");
+
+      await ref.push().set({
+        'latitude': _locationResult.latitude.toString(),
+        'longitude': _locationResult.longitude.toString(),
+        "Date": DateTime.now().toString(),
+      });
     } catch (e) {
       print(e);
     }
@@ -122,8 +125,8 @@ class _locationState extends State<location> {
       });
     }).listen((loc.LocationData currentlocation) async {
       await FirebaseFirestore.instance.collection('location').doc('user1').set({
-        'latitude': currentlocation.latitude,
-        'longitude': currentlocation.longitude,
+        'latitude': currentlocation.latitude.toString(),
+        'longitude': currentlocation.longitude.toString(),
         'name': 'john'
       }, SetOptions(merge: true));
     });

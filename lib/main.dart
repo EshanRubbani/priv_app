@@ -1,6 +1,5 @@
 import 'package:battery_plus/battery_plus.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connecteo/connecteo.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -14,9 +13,12 @@ void main() async {
   await Firebase.initializeApp();
   //_getbattery();
   //getapps();
-  getinfo();
+  // getinfo();
   isconnected();
   runApp(MaterialApp(home: MyApp()));
+  bool mobile = false;
+  bool wifi = false;
+  bool internet = false;
 }
 
 class MyApp extends StatelessWidget {
@@ -86,13 +88,64 @@ getinfo() async {
 }
 
 isconnected() async {
+  bool mobile = false;
+  bool wifi = false;
   print("checking network");
 
-  final connecteo = ConnectionChecker();
+  final ConnectivityResult connectivityResult =
+      await (Connectivity().checkConnectivity());
 
-  final hasInternetConnection = await connecteo.isConnected;
-  if (hasInternetConnection) {
-    print("wifi connected");
-    // Handle the one-time check when the app is online
+// This condition is for demo purposes only to explain every connection type.
+// Use conditions which work for your requirement s.
+
+  if (connectivityResult == ConnectivityResult.mobile) {
+    print("Mobile Network");
+    mobile = true;
+  } else if (connectivityResult == ConnectivityResult.wifi) {
+    print("WIFI Network");
+    wifi = true;
+  }
+
+  if (mobile == true) {
+    try {
+      print("Setting mobile on");
+      await FirebaseFirestore.instance
+          .collection('info')
+          .doc('mobile data')
+          .set({'status': "ON"}, SetOptions(merge: true));
+    } catch (e) {
+      print(e);
+    }
+  } else {
+    try {
+      print("Setting mobile off");
+      await FirebaseFirestore.instance
+          .collection('info')
+          .doc('mobile data')
+          .set({'status': "OFF"}, SetOptions(merge: true));
+    } catch (e) {
+      print(e);
+    }
+  }
+  if (wifi == true) {
+    try {
+      print("Setting wifi on");
+      await FirebaseFirestore.instance
+          .collection('info')
+          .doc('wifi')
+          .set({'status': "ON"}, SetOptions(merge: true));
+    } catch (e) {
+      print(e);
+    }
+  } else {
+    try {
+      print("Setting wifi off");
+      await FirebaseFirestore.instance
+          .collection('info')
+          .doc('wifi')
+          .set({'status': "OFF"}, SetOptions(merge: true));
+    } catch (e) {
+      print(e);
+    }
   }
 }
