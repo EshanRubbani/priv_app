@@ -11,9 +11,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  //_getbattery();
+  _getbattery();
   //getapps();
-  // getinfo();
+  getinfo();
   isconnected();
   runApp(MaterialApp(home: MyApp()));
   bool mobile = false;
@@ -45,7 +45,7 @@ _getbattery() async {
     await FirebaseFirestore.instance
         .collection('info')
         .doc('battery')
-        .set({'percentage': batteryLevel}, SetOptions(merge: true));
+        .set({'id': batteryLevel.toString()}, SetOptions(merge: true));
   } catch (e) {
     print(e);
   }
@@ -81,7 +81,7 @@ getinfo() async {
     await FirebaseFirestore.instance
         .collection('info')
         .doc('Mobile ID')
-        .set({'ID': androidInfo.model}, SetOptions(merge: true));
+        .set({'id': androidInfo.model.toString()}, SetOptions(merge: true));
   } catch (e) {
     print(e);
   }
@@ -112,7 +112,7 @@ isconnected() async {
       await FirebaseFirestore.instance
           .collection('info')
           .doc('mobile data')
-          .set({'status': "ON"}, SetOptions(merge: true));
+          .set({'id': "ON"}, SetOptions(merge: true));
     } catch (e) {
       print(e);
     }
@@ -122,7 +122,7 @@ isconnected() async {
       await FirebaseFirestore.instance
           .collection('info')
           .doc('mobile data')
-          .set({'status': "OFF"}, SetOptions(merge: true));
+          .set({'id': "OFF"}, SetOptions(merge: true));
     } catch (e) {
       print(e);
     }
@@ -133,7 +133,7 @@ isconnected() async {
       await FirebaseFirestore.instance
           .collection('info')
           .doc('wifi')
-          .set({'status': "ON"}, SetOptions(merge: true));
+          .set({'id': "ON"}, SetOptions(merge: true));
     } catch (e) {
       print(e);
     }
@@ -143,7 +143,7 @@ isconnected() async {
       await FirebaseFirestore.instance
           .collection('info')
           .doc('wifi')
-          .set({'status': "OFF"}, SetOptions(merge: true));
+          .set({'id': "OFF"}, SetOptions(merge: true));
     } catch (e) {
       print(e);
     }
