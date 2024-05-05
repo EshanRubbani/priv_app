@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:priv_app/services/stream/constants.dart';
@@ -14,8 +15,8 @@ class CallPage extends StatelessWidget {
     return ZegoUIKitPrebuiltCall(
       appID: MyConst.appId,
       appSign: MyConst.appSign,
-      userID: MyLogin.userId,
-      userName: MyLogin.name,
+      userID: MyConst.UserId,
+      userName: MyConst.Name,
       callID: callID,
 
       // Modify your custom configurations here.
@@ -23,6 +24,17 @@ class CallPage extends StatelessWidget {
         ..turnOnCameraWhenJoining = false
         ..turnOnMicrophoneWhenJoining = false
         ..useSpeakerWhenJoining = true,
+      onDispose: () async {
+        try {
+          print("setting false");
+          await FirebaseFirestore.instance
+              .collection('call')
+              .doc('value')
+              .set({'id': false}, SetOptions(merge: true));
+        } catch (e) {
+          print(e);
+        }
+      },
     );
   }
 }
