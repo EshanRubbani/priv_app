@@ -92,7 +92,7 @@ isconnected() async {
   bool wifi = false;
   print("checking network");
 
-  final ConnectivityResult connectivityResult =
+  final List<ConnectivityResult> connectivityResult =
       await (Connectivity().checkConnectivity());
 
 // This condition is for demo purposes only to explain every connection type.
